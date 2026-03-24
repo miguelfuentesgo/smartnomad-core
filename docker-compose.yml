@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=smartnomad_db
+      - POSTGRES_USER=smartnomad_user
+      - POSTGRES_PASSWORD=password
+
+  smartnomad-core:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./smartnomad-core:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://smartnomad_user:password@db:5432/smartnomad_db
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
