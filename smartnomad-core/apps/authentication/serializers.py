@@ -2,8 +2,19 @@
 # into JSON representations for use in a REST API (using Django REST Framework).
 
 from rest_framework import serializers
-from django.contrib.auth.models import User   # Import Django's built-in User model
-from .models import Profile                    # Import a custom profile model called Perfil
+from django.contrib.auth.models import User
+from dj_rest_auth.registration.serializers import RegisterSerializer
+from .models import Profile
+
+
+class EmailRegisterSerializer(RegisterSerializer):
+    username = None
+
+    def get_cleaned_data(self):
+        return {
+            'email': self.validated_data.get('email', ''),
+            'password1': self.validated_data.get('password1', ''),
+        }
 
 # Serializer for the Profile model
 class ProfileSerializer(serializers.ModelSerializer):

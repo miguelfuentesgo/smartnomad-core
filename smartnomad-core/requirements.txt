@@ -5,3 +5,5 @@ djangorestframework>=3.14.0
 django-cors-headers>=4.3.0
 dj-rest-auth[with_social]>=7.2.0
 django-allauth>=65.15.0
+Pillow>=10.0.0
+python-dotenv>=1.0.1
